@@ -22,4 +22,7 @@ public final class ScanerFilter {
         mSupportedList.put(UsbSensodroidScaner.IDENTIFIER, UsbSensodroidScaner.class);
     }
 
+    public static HashMap<String, Class<? extends UsbGliderDevice>> getSupportedList() {
+        return mSupportedList;
+    }
 }

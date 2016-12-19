@@ -97,9 +97,8 @@ public class UsbGliderRouter extends GliderRouter<UsbGliderDevice> {
                         if (device.equals(connecting.getUsbDevice())) {
                             connecting.connect(context);
                         }
-                    } else {
-                        connecting = null;
                     }
+                    connecting = null;
                 }
             }
         }
