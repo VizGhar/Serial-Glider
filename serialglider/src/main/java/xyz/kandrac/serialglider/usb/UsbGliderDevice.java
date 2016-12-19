@@ -14,34 +14,26 @@ import com.felhr.usbserial.UsbSerialInterface;
 import xyz.kandrac.serialglider.GliderDevice;
 
 /**
+ * Usb Device Decorator class for handling serial communication.
+ * <p>
  * Created by jan on 19.12.2016.
  */
-
 public abstract class UsbGliderDevice extends GliderDevice {
-
-    public static final int CONNECTION_UNDEFINED = 0;
-    public static final int CONNECTION_SERIAL = 1;
 
     private UsbDeviceConnection deviceConnection;
     private Handler mHandler;
-
     private UsbDevice usbDevice;
-    UsbSerialDevice serial;
+    private UsbSerialDevice serial;
 
-    public UsbDeviceConnection getDeviceConnection(Context context) {
+    @Override
+    public boolean connect(Context context) {
+
         if (deviceConnection == null) {
             UsbManager usbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
 
             // open connection to device
             deviceConnection = usbManager.openDevice(usbDevice);
         }
-        return deviceConnection;
-    }
-
-    @Override
-    public boolean connect(Context context) {
-
-        getDeviceConnection(context);
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -55,10 +47,6 @@ public abstract class UsbGliderDevice extends GliderDevice {
         serial = UsbSerialDevice.createUsbSerialDevice(usbDevice, deviceConnection);
 
         serial.open();
-        serial.setBaudRate(2400);
-        serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
-        serial.setParity(UsbSerialInterface.PARITY_NONE);
-        serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
         serial.read(new UsbSerialInterface.UsbReadCallback() {
             @Override
             public void onReceivedData(byte[] bytes) {
@@ -71,7 +59,9 @@ public abstract class UsbGliderDevice extends GliderDevice {
 
     @Override
     public void disconnect() {
-        serial.close();
+        if (serial != null) {
+            serial.close();
+        }
     }
 
     public void setUsbDevice(UsbDevice usbDevice) {
@@ -81,4 +71,10 @@ public abstract class UsbGliderDevice extends GliderDevice {
     public UsbDevice getUsbDevice() {
         return usbDevice;
     }
+
+    /**
+     * @return identifier composed as "<Vendor ID>:<Product ID>"
+     */
+    @Override
+    public abstract String getIdentifier();
 }

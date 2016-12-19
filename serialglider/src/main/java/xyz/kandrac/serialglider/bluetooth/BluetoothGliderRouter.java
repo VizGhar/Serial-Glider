@@ -12,17 +12,14 @@ import java.util.Set;
 import xyz.kandrac.serialglider.GliderRouter;
 
 /**
+ * Class for Handling requests related to serial Bluetooth connection.
+ * <p>
  * Created by jan on 19.12.2016.
  */
-
 public class BluetoothGliderRouter extends GliderRouter<BluetoothGliderDevice> {
 
-    private BluetoothGliderModels modelsSupported;
-
     public BluetoothGliderRouter(HashMap<String, Class<? extends BluetoothGliderDevice>> devices) {
-        if (devices != null) {
-            modelsSupported = new BluetoothGliderModels(devices);
-        }
+        super(devices);
     }
 
     @Override

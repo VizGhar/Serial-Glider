@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.usb.UsbManager;
 import android.support.annotation.NonNull;
 
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -32,7 +33,19 @@ public abstract class GliderRouter<T extends GliderDevice> {
     public static final int CONNECT_RESULT_CHECK_FAIL = 3;
     public static final int CONNECT_RESULT_CONNECTED = 4;
 
-    protected T connectedDevice;
+    private T connectedDevice;
+
+    /**
+     * List of all models supported or null if any model is supported. In case of null, keep in mind
+     * you will have to create some generic device, that will handle all the requests
+     */
+    protected GliderModels<? extends T> modelsSupported;
+
+    public GliderRouter(HashMap<String, Class<? extends T>> devices) {
+        if (devices != null) {
+            modelsSupported = new GliderModels<>(devices);
+        }
+    }
 
     /**
      * Helper method for getting all {@link GliderDevice}s from given context. Basically every time
@@ -57,7 +70,7 @@ public abstract class GliderRouter<T extends GliderDevice> {
      * Connect to device obtained via {@link #getDevices(Context)} method
      *
      * @param device to connect to
-     * @return
+     * @return status of connecting process
      */
     public int connectDevice(@NonNull T device, Context context) {
         if (connectedDevice != null) {

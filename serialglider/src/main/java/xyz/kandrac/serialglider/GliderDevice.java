@@ -5,33 +5,55 @@ import android.content.Context;
 /**
  * Every device that should be connected needs to support following methods:
  * <ol>
- *     <li>connect</li>
- *     <li>disconnect</li>
- *     <li>handle received message</li>
- *     <li>provide unique identifier per type</li>
- *     <li>provide device name</li>
+ * <li>connect</li>
+ * <li>disconnect</li>
+ * <li>handle received message</li>
+ * <li>provide unique identifier per type</li>
+ * <li>provide device name</li>
  * </ol>
- *
+ * <p>
  * Created by jan on 19.12.2016.
  */
 public abstract class GliderDevice {
 
-    private MessageReaderListener mListener;
+    protected GliderMessageListener mListener;
 
-    public interface MessageReaderListener {
+    /**
+     * In order to properly handle message from any {@link GliderDevice} you will need to set this
+     * listener for the device. The listener should only post message received events to
+     * {@code Activity}'s main thread.
+     */
+    public interface GliderMessageListener {
+
+        /**
+         * Method called after device's serial interface receives its message. This message will
+         * always be sent to main thread
+         *
+         * @param message to be processed
+         */
         void onMessageReceived(String message);
     }
 
-    public void setListener(MessageReaderListener listener) {
+    /**
+     * Set listener for message handling
+     *
+     * @param listener to be set
+     */
+    public void setListener(GliderMessageListener listener) {
         mListener = listener;
     }
 
-    public MessageReaderListener getListener() {
-        return mListener;
-    }
-
+    /**
+     * Tries to connect this device for serial communication
+     *
+     * @param context for connection
+     * @return true if connected
+     */
     public abstract boolean connect(Context context);
 
+    /**
+     * Disconnect connected device if possible
+     */
     public abstract void disconnect();
 
     /**

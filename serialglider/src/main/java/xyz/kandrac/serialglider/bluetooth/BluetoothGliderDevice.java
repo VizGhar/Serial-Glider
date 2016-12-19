@@ -98,4 +98,10 @@ public abstract class BluetoothGliderDevice extends GliderDevice {
     public BluetoothDevice getBluetoothDevice() {
         return bluetoothDevice;
     }
+
+    /**
+     * @return identifier equals to "{@link BluetoothDevice#getName()}"
+     */
+    @Override
+    public abstract String getIdentifier();
 }

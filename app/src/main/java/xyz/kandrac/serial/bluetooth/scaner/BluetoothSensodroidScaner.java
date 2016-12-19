@@ -24,7 +24,7 @@ public class BluetoothSensodroidScaner extends BluetoothGliderDevice {
             if (current >= '0' && current <= '9') {
                 cached.append(current - '0');
             } else {
-                getListener().onMessageReceived(cached.toString());
+                mListener.onMessageReceived(cached.toString());
                 cached = new StringBuilder();
             }
         }

@@ -11,7 +11,7 @@ import xyz.kandrac.serialglider.GliderDevice;
 import xyz.kandrac.serialglider.usb.UsbGliderDevice;
 import xyz.kandrac.serialglider.usb.UsbGliderRouter;
 
-public class MainActivity extends AppCompatActivity implements GliderDevice.MessageReaderListener {
+public class MainActivity extends AppCompatActivity implements GliderDevice.GliderMessageListener {
 
     UsbGliderRouter router;
 

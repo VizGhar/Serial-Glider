@@ -1,11 +1,11 @@
-package xyz.kandrac.serialglider.bluetooth;
+package xyz.kandrac.serialglider.usb;
 
 /**
- * Minimal bluetooth serial device
+ * Minimal representation of serial USB device
  * <p>
  * Created by jan on 19.12.2016.
  */
-public class BluetoothGliderDeviceMinimal extends BluetoothGliderDevice {
+public class UsbGliderDeviceMinimal extends UsbGliderDevice {
 
     @Override
     public void handleMessage(byte[] message) {

@@ -17,18 +17,18 @@ import java.util.Set;
 import xyz.kandrac.serialglider.GliderRouter;
 
 /**
+ * Class for Handling requests related to serial USB connection.
+ * <p>
  * Created by jan on 19.12.2016.
  */
-
 public class UsbGliderRouter extends GliderRouter<UsbGliderDevice> {
 
     private static final String ACTION_USB_PERMISSION = UsbGliderRouter.class.getPackage().getName() + ".USB_PERMISSION";
 
-    private UsbGliderModels modelsSupported;
     private UsbGliderDevice connecting;
 
     public UsbGliderRouter(HashMap<String, Class<? extends UsbGliderDevice>> devices) {
-        modelsSupported = new UsbGliderModels(devices);
+        super(devices);
     }
 
     /**
@@ -58,7 +58,12 @@ public class UsbGliderRouter extends GliderRouter<UsbGliderDevice> {
             int vendorId = device.getVendorId();
             int productId = device.getProductId();
 
-            UsbGliderDevice usbGliderDevice = modelsSupported.getDevice(String.format(Locale.ENGLISH, "%s:%s", vendorId, productId));
+            UsbGliderDevice usbGliderDevice;
+            if (modelsSupported != null) {
+                usbGliderDevice = modelsSupported.getDevice(String.format(Locale.ENGLISH, "%s:%s", vendorId, productId));
+            } else {
+                usbGliderDevice = new UsbGliderDeviceMinimal();
+            }
 
             if (usbGliderDevice == null) {
                 continue;
