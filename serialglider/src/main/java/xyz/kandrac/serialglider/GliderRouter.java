@@ -4,7 +4,7 @@ import android.content.Context;
 import android.hardware.usb.UsbManager;
 import android.support.annotation.NonNull;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Router should work as helper to simplify:
@@ -42,7 +42,7 @@ public abstract class GliderRouter<T extends GliderDevice> {
      * @return list of all devices
      * @see {@link UsbManager#getDeviceList()}
      */
-    public abstract List<T> getDevices(Context context);
+    public abstract Set<T> getDevices(Context context);
 
     /**
      * Check whether connecting to device is even possible. If connection is either try to make it

@@ -9,10 +9,10 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import xyz.kandrac.serialglider.GliderRouter;
 
@@ -49,8 +49,8 @@ public class UsbGliderRouter extends GliderRouter<UsbGliderDevice> {
     }
 
     @Override
-    public List<UsbGliderDevice> getDevices(Context context) {
-        ArrayList<UsbGliderDevice> result = new ArrayList<>();
+    public Set<UsbGliderDevice> getDevices(Context context) {
+        Set<UsbGliderDevice> result = new HashSet<>();
         UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
 
@@ -65,7 +65,6 @@ public class UsbGliderRouter extends GliderRouter<UsbGliderDevice> {
             }
             usbGliderDevice.setUsbDevice(device);
             result.add(usbGliderDevice);
-
         }
         return result;
     }
