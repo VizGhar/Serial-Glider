@@ -95,7 +95,7 @@ public abstract class BluetoothGliderDevice extends GliderDevice {
         this.bluetoothDevice = bluetoothDevice;
     }
 
-    public BluetoothDevice getUsbDevice() {
+    public BluetoothDevice getBluetoothDevice() {
         return bluetoothDevice;
     }
 }

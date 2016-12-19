@@ -20,7 +20,9 @@ public class BluetoothGliderRouter extends GliderRouter<BluetoothGliderDevice> {
     private BluetoothGliderModels modelsSupported;
 
     public BluetoothGliderRouter(HashMap<String, Class<? extends BluetoothGliderDevice>> devices) {
-        modelsSupported = new BluetoothGliderModels(devices);
+        if (devices != null) {
+            modelsSupported = new BluetoothGliderModels(devices);
+        }
     }
 
     @Override
@@ -38,7 +40,12 @@ public class BluetoothGliderRouter extends GliderRouter<BluetoothGliderDevice> {
         // filter bluetooth devices
         for (BluetoothDevice device : bondedDevices) {
             String identifier = device.getName();
-            BluetoothGliderDevice bluetoothGliderDevice = modelsSupported.getDevice(identifier);
+            BluetoothGliderDevice bluetoothGliderDevice;
+            if (modelsSupported != null) {
+                bluetoothGliderDevice = modelsSupported.getDevice(identifier);
+            } else {
+                bluetoothGliderDevice = new BluetoothGliderDeviceMinimal();
+            }
 
             if (bluetoothGliderDevice == null) {
                 continue;

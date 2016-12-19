@@ -8,11 +8,8 @@ import xyz.kandrac.serialglider.bluetooth.BluetoothGliderDevice;
 
 public class BluetoothSensodroidScaner extends BluetoothGliderDevice {
 
-    private static final int VENDOR_ID = 3690;
-    private static final int PRODUCT_ID = 790;
-
     public static final String READABLE_IDENTIFIER = "Sensodroid Barcode Reader";
-    public static final String IDENTIFIER = "";
+    public static final String IDENTIFIER = "symcode";
 
     private StringBuilder cached = new StringBuilder();
 

@@ -22,4 +22,7 @@ public final class ScanerFilter {
         mSupportedList.put(BluetoothSensodroidScaner.IDENTIFIER, BluetoothSensodroidScaner.class);
     }
 
+    public static HashMap<String, Class<? extends BluetoothGliderDevice>> getSupportedList() {
+        return mSupportedList;
+    }
 }
