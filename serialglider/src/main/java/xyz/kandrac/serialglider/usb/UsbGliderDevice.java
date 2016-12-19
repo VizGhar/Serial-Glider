@@ -1,6 +1,7 @@
 package xyz.kandrac.serialglider.usb;
 
 import android.content.Context;
+import android.hardware.usb.UsbDevice;
 
 import xyz.kandrac.serialglider.GliderDevice;
 
@@ -8,7 +9,10 @@ import xyz.kandrac.serialglider.GliderDevice;
  * Created by jan on 19.12.2016.
  */
 
-public class UsbGliderDevice extends GliderDevice {
+public abstract class UsbGliderDevice extends GliderDevice {
+
+    private UsbDevice usbDevice;
+
     @Override
     public boolean connect(Context context) {
         return false;
@@ -24,13 +28,11 @@ public class UsbGliderDevice extends GliderDevice {
 
     }
 
-    @Override
-    public String getIdentifier() {
-        return null;
+    public void setUsbDevice(UsbDevice usbDevice) {
+        this.usbDevice = usbDevice;
     }
 
-    @Override
-    public String getReadableIdentifier() {
-        return null;
+    public UsbDevice getUsbDevice() {
+        return usbDevice;
     }
 }

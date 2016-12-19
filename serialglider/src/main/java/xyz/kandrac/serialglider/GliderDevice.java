@@ -16,6 +16,20 @@ import android.content.Context;
  */
 public abstract class GliderDevice {
 
+    private MessageReaderListener mListener;
+
+    public interface MessageReaderListener {
+        void onMessageReceived(String message);
+    }
+
+    public void setListener(MessageReaderListener listener) {
+        mListener = listener;
+    }
+
+    public MessageReaderListener getListener() {
+        return mListener;
+    }
+
     public abstract boolean connect(Context context);
 
     public abstract void disconnect();

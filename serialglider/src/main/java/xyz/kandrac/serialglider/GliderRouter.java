@@ -51,7 +51,7 @@ public abstract class GliderRouter<T extends GliderDevice> {
      *
      * @return true if connection is possible
      */
-    public abstract boolean check();
+    public abstract boolean check(@NonNull T device, Context context);
 
     /**
      * Connect to device obtained via {@link #getDevices(Context)} method
@@ -64,7 +64,7 @@ public abstract class GliderRouter<T extends GliderDevice> {
             return CONNECT_RESULT_ALREADY_CONNECTED;
         }
 
-        if (!check()) {
+        if (!check(device, context)) {
             return CONNECT_RESULT_CHECK_FAIL;
         }
 

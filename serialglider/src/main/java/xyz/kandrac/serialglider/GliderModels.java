@@ -1,11 +1,10 @@
 package xyz.kandrac.serialglider;
 
-import android.hardware.usb.UsbDevice;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Holds reference to every {@link GliderDevice} supported by {@link GliderRouter}. If any new
@@ -29,20 +28,16 @@ public class GliderModels<T extends GliderDevice> {
     /**
      * Get instantiated device based on its identifier
      *
-     * @param vendorId  to identify device by
-     * @param deviceId  to identify device by
-     * @param productId to identify device by
      * @return instance of {@code UsbGlider} or null if undefined
      */
-    public T getDevice(int vendorId, int deviceId, int productId, UsbDevice device) {
-
-        String identifier = createIdentifier(vendorId, deviceId, productId);
+    @Nullable
+    public T getDevice(String identifier) {
 
         try {
             // instantiate UsbGlider if its identifier is found in mSupportedList
             Class<? extends T> deviceClass = mSupportedList.get(identifier);
             if (deviceClass != null) {
-                return deviceClass.getConstructor(UsbDevice.class).newInstance(device);
+                return deviceClass.getConstructor().newInstance();
             }
             return null;
         } catch (NoSuchMethodException e) {
@@ -56,9 +51,5 @@ public class GliderModels<T extends GliderDevice> {
             Log.e(TAG, "Invocation error while creating instance of class for " + identifier, e);
         }
         return null;
-    }
-
-    private static String createIdentifier(int vendorId, int deviceId, int productId) {
-        return String.format(Locale.ENGLISH, "%s:%s", vendorId, productId);
     }
 }
